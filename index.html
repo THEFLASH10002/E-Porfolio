@@ -237,6 +237,7 @@
             position: relative; /* Ensure content stays above fixed background */
             z-index: 1;
             background-color: transparent; /* Allow canvas to show through */
+            border-top: 1px solid var(--glass-border); /* Separator line */
         }
 
         .page {
@@ -399,7 +400,7 @@
               margin-top: 10px; /* Space between primary/secondary links */
          }
 
-        .doc-placeholder {
+        .doc-placeholder { /* Style for other placeholders */
             width: 80px;
             height: 105px; /* Adjusted aspect ratio */
             background-color: rgba(255,255,255,0.1); /* Lighter placeholder */
@@ -411,7 +412,15 @@
             font-size: 0.8rem;
             color: #ccc;
             text-align: center;
-            border-radius: 3px;
+            border-radius: 5px; /* Slightly rounded corners */
+        }
+        .doc-preview-image { /* Style for actual preview images */
+             max-width: 100%; /* Fit container width */
+             max-height: 150px; /* Limit height */
+             height: auto; /* Maintain aspect ratio */
+             margin-top: 15px; /* Space above image */
+             border-radius: 5px; /* Slightly rounded corners */
+             border: 1px solid rgba(255,255,255,0.2); /* Match placeholder style */
         }
 
         /* --- Footer --- */
@@ -544,8 +553,10 @@
                     </div>
                     <div class="item-preview">
                         <a href="professional_purpose_memo.pdf" target="_blank" class="btn btn-primary">[View Memo PDF]</a>
-                        <div class="doc-placeholder">PDF<br>Preview</div>
-                        <p><small>[Replace link above with the actual filename of your PDF (e.g., 'memo.pdf'). Place the PDF in the same folder as this HTML file when hosting.]</small></p>
+                        <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362965421187141832/image.png?ex=68044ff7&is=6802fe77&hm=b078baa5c0f1a927fbcdd220fa21b9431ced04c8bd189be52f00387c722088c3&"
+                             alt="Preview of Professional Purpose Memo"
+                             class="doc-preview-image"
+                             onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Memo<br>Preview<br>Error</div> <p><small>[Replace link above with the actual filename of your PDF (e.g., 'memo.pdf'). Place the PDF in the same folder as this HTML file when hosting.]</small></p>
                     </div>
                 </div>
             </article>
@@ -560,8 +571,10 @@
                     <div class="item-preview">
                         <a href="resume.pdf" target="_blank" class="btn btn-primary">[View Resume PDF]</a>
                         <a href="https://www.linkedin.com/in/kennedy-gregg-52543128a/" target="_blank" class="btn btn-secondary">View LinkedIn</a>
-                        <div class="doc-placeholder">Resume<br>Preview</div>
-                        <p><small>[Ensure your resume PDF is named 'resume.pdf' or update the link. Double-check both links and remove any private info from the resume.]</small></p>
+                        <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362966300439220445/image.png?ex=680450c8&is=6802ff48&hm=54674effb238f111d174813f7fcb2d3b9155f1e657205dfafff2067ae197c6d3&"
+                             alt="Preview of Resume"
+                             class="doc-preview-image"
+                             onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Resume<br>Preview<br>Error</div> <p><small>[Ensure your resume PDF is named 'resume.pdf' or update the link. Double-check both links and remove any private info from the resume.]</small></p>
                     </div>
                 </div>
             </article>
