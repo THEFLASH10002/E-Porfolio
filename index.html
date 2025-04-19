@@ -64,7 +64,8 @@
 
         h1 { font-size: 3rem; margin-bottom: 0.3em; color: var(--heading-color); font-weight: bold;}
         h1 .highlight { color: var(--primary-color); } /* Highlight part of the name */
-        h2 { font-size: 2.2rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.3em; margin-top: 1.5em;}
+        /* Adjusted h2 margin as it's now inside .container or .reflection-content */
+        h2 { font-size: 2.2rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.3em; margin-top: 0;}
         h3 { font-size: 1.6rem; color: var(--secondary-color); }
         h4 { font-size: 1.2rem; color: var(--secondary-color); margin-top: 1.5em; margin-bottom: 0.5em;}
 
@@ -95,8 +96,10 @@
         /* --- Layout & Containers --- */
         .container {
             max-width: 1100px; /* Wider container for modern look */
-            margin: 0 auto;
-            padding: 20px;
+            margin-left: auto;  /* Keep content centered */
+            margin-right: auto;
+            padding-left: 20px; /* Add padding */
+            padding-right: 20px;
             position: relative; /* Ensure content stays above background */
             z-index: 1; /* Above canvas within the same stacking context */
         }
@@ -118,6 +121,8 @@
             display: flex;
             justify-content: space-between; /* Pushes logo/name and links apart */
             align-items: center;
+            /* Container inside nav doesn't need z-index */
+            position: static;
         }
 
         nav .nav-logo a {
@@ -232,6 +237,7 @@
 
 
         /* --- Page Content Styling & Switching --- */
+        /* Main element is now full width */
         main.page-content {
             padding-top: 40px; /* Add space below nav */
             position: relative; /* Ensure content stays above fixed background */
@@ -243,6 +249,7 @@
         .page {
             display: none; /* Hide pages by default */
             animation: fadeIn 0.5s ease-in-out; /* Add fade-in effect */
+            padding-top: 40px; /* Add padding above section content */
             padding-bottom: 40px; /* Add padding at the bottom of each page */
             position: relative; /* Needed for potential pseudo-elements */
             /* overflow: hidden; */ /* Remove overflow hidden */
@@ -275,7 +282,7 @@
             flex-direction: row; /* Keep side-by-side layout */
             align-items: flex-start;
             gap: 30px;
-            margin-top: 20px; /* Add some space from top */
+            /* margin-top: 20px; */ /* Removed, handled by section padding */
         }
         /* Apply glass box style */
         #about-page .about-content {
@@ -319,7 +326,7 @@
              border-radius: 10px;
              box-shadow: var(--shadow);
             max-width: 900px; /* Limit width for readability */
-            margin: 20px auto; /* Center the content block */
+            /* margin: 20px auto; */ /* Removed, handled by container */
         }
          /* Title inside the box */
          #reflection-page .reflection-content h2 {
@@ -506,113 +513,118 @@
         </div>
     </header>
 
-    <main class="container page-content">
+    <main class="page-content">
 
         <section id="about-page" class="page">
-             <h2>About Me</h2>
-            <div class="about-content"> <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362945297185247352/image0.jpg?ex=68043d39&is=6802ebb9&hm=a2421d8f5b9c717f4a22a596242648291b441fc08237fbca5e2b0966d6314780&"
-                      alt="About section visual placeholder"
-                      class="about-image-placeholder"
-                      onerror="this.onerror=null; this.src='https://placehold.co/250x200/444444/aaaaaa?text=Image+Error';">
-                 <div class="about-text">
-                     <p>
-                         [Write a brief professional bio here. You could mention your current role/studies (e.g., Computer Science Scholar at Howard University), key technical skills (like Python, AI/ML, C++ from your resume), and main interests within your field or technical communication. Keep it concise - perhaps 1-2 paragraphs.]
-                     </p>
-                      <p>
-                         [Maybe briefly mention your passion for mentorship or supporting diversity in tech, drawing inspiration from your Professional Memo.]
-                     </p>
+             <div class="container">
+                 <h2>About Me</h2>
+                <div class="about-content"> <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362945297185247352/image0.jpg?ex=68043d39&is=6802ebb9&hm=a2421d8f5b9c717f4a22a596242648291b441fc08237fbca5e2b0966d6314780&"
+                          alt="About section visual placeholder"
+                          class="about-image-placeholder"
+                          onerror="this.onerror=null; this.src='https://placehold.co/250x200/444444/aaaaaa?text=Image+Error';">
+                     <div class="about-text">
+                         <p>
+                             [Write a brief professional bio here. You could mention your current role/studies (e.g., Computer Science Scholar at Howard University), key technical skills (like Python, AI/ML, C++ from your resume), and main interests within your field or technical communication. Keep it concise - perhaps 1-2 paragraphs.]
+                         </p>
+                          <p>
+                             [Maybe briefly mention your passion for mentorship or supporting diversity in tech, drawing inspiration from your Professional Memo.]
+                         </p>
 
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="reflection-page" class="page">
-            <div class="reflection-content">
-                 <h2>Reflective Essay</h2>
-                 <p>Before this course, I viewed writing as something functional—just another academic tool to communicate ideas and get assignments done. But over the past semester, I’ve developed a much deeper understanding of writing as a skill, especially in technical communication. I’ve come to see technical writing as a bridge—between people, between goals, and between ideas. It’s not just about clarity and correctness, but also about empathy, accessibility, and intentional design. Through this course, I’ve grown into a more confident, strategic, and audience-aware writer, and I’m now much more mindful of how the words I choose can shape both professional outcomes and personal impressions.</p>
-                 <p>At Howard University, I’ve often been challenged to represent myself with precision, professionalism, and pride. This course pushed me further by requiring me to tailor my communication for real-world purposes: applying to jobs, offering guidance through digital spaces, and expressing my goals with clarity. Each assignment wasn’t just a task—it was a way to practice thinking like someone in the field, whether that meant designing a survivor’s guide to digital platforms or crafting a purpose-driven resume and LinkedIn profile.</p>
-                 <p>One of the most transformative pieces for me was the <span class="highlight-text">Professional Purpose Memo</span>. It forced me to slow down and articulate what drives me, both academically and professionally. I realized that technical writing isn’t just about what I do; it’s a way to reveal why I do it. It helped me align my goals with my values and taught me the importance of having a strong, consistent message when presenting myself in professional settings.</p>
-                 <p>The <span class="highlight-text">Job Application Package</span> showed me the technical side of branding: organizing information for quick readability, choosing strong verbs, and designing my documents to stand out while remaining professional. It was less about buzzwords and more about clarity, credibility, and confidence. I now understand that a resume or LinkedIn profile is more than a list—it’s a narrative, and I’m the storyteller.</p>
-                 <p>The <span class="highlight-text">Digital Survivor’s Guide</span> helped me flex creative and technical muscles at the same time. It reminded me that technical writing has to be not only clear but usable and accessible to a diverse audience. Through layout choices, tone, and structure, I was able to transform a topic that could feel overwhelming into a helpful, even enjoyable, guide.</p>
-                 <p>Finally, the fourth piece—a project from another course—allowed me to showcase how I apply technical communication in a broader context. It demonstrates how writing can support research, enhance collaboration, and amplify impact across disciplines.</p>
-                 <p>In all, this portfolio reflects my growth as a communicator who values clarity, purpose, and impact. It’s not just about being a better writer—it’s about being a better professional. I now approach writing with the understanding that every document is an opportunity to connect, empower, and inform. These are skills I will carry forward in internships, research, and eventually in my career. Technical writing has helped me sharpen my voice and my vision—and now, I’m excited to share that with the world.</p>
+             <div class="container">
+                <div class="reflection-content">
+                     <h2>Reflective Essay (Subject To Change Alot)</h2>
+                     <p>I once considered writing to be a utilitarian thing prior to this class—a means for academics to convey ideas and get work done, that's all. But over the course of the semester, I've developed a much greater respect for writing as a craft, especially in technical communication. Now, I view technical writing as a bridge—between people, between goals, and between ideas. It is not just a matter of correctness and clarity, but of empathy, accessibility, and intentional design. I have developed in this course into a more assertive, strategic, and audience-aware writer, and I am now much more attuned to the ways that the words I choose can impact both business outcomes and personal impressions.</p>
+                     <p>At Howard University, I have been repeatedly challenged to communicate with accuracy, professionalism, and pride. This course pushed me harder by requiring me to mold my communication to real-life applications: job searches, giving advice through online formats, and declaring my goals specifically. Each assignment wasn.t just an exercise—it was a way of practicing how to think like a professional in the field, whether it was designing a survivor's guide to online spaces or crafting an intentional resume and LinkedIn profile.</p>
+                     <p>One of the most enlightening pieces of writing for me was the <span class="highlight-text">Professional Purpose Memo</span>. It forced me to step back and articulate what drives me, both academically and professionally. It helped me realize that technical writing is less about what I'm doing, but a way to demonstrate why I'm doing it. It forced me to align my aspirations with my values and helped me see the value in having a clear, consistent message when presenting myself in a professional setting.</p>
+                     <p>The <span class="highlight-text">Job Application Package</span> showed me the technical side of branding: organizing information for quick readability, choosing active verbs, and designing my documents to stand out in a professional manner. It wasn't so much about buzzwords as clarity, credibility, and confidence. I have learned now that a resume or LinkedIn profile is not so much a list—it's a story, and I'm the author.</p>
+                     <p>The <span class="highlight-text">Digital Survivor’s Guide</span> enabled me to stretch both technical and creative muscles at the same time. It reminded me that technical writing needs to be not only clear but usable and accessible to a wide variety of people. Through organizational, tone, and layout choices, I was able to make a topic that could potentially be overwhelming into a helpful, even enjoyable, guide.</p>
+                     <p>Finally, the fourth piece—a project from another class—allowed me to show how I apply technical communication to a broader context. It shows how writing can support research, enable collaboration, and broaden impact across disciplines.</p>
+                     <p>In total, this portfolio reflects my growth as a communicator who values clarity, purpose, and impact. It's not just about being a better writer—it's about being a better professional. I come to writing now knowing that every document can potentially connect, empower, and inform. These are the abilities that I will carry with me to internships, research, and eventually to my professional career. Technical writing has helped me hone my voice and my vision—and now, I am excited about sharing that with the world.</p>
+                </div>
             </div>
         </section>
 
 
         <section id="portfolio-page" class="page">
-            <h2>Portfolio Showcase</h2>
-            <p>This section contains selected works demonstrating my technical communication skills developed during the course.</p>
+             <div class="container">
+                <h2>Portfolio Showcase</h2>
+                <p>This section contains selected works demonstrating my technical communication skills developed during the course.</p>
 
-            <article class="portfolio-item" id="memo"> <h3>1. Professional Purpose Memo</h3>
-                <div class="item-content">
-                    <div class="item-description">
-                        <h4>Assignment Summary & Commentary</h4>
-                        <p><strong>Summary:</strong> [Provide a brief summary of the Professional Purpose Memo assignment goals and requirements here.]</p>
-                        <p><strong>Commentary & Learning:</strong> [Describe what you learned from completing this assignment. What skills did you practice or develop? How did it clarify your professional purpose or understanding of workplace communication?]</p>
+                <article class="portfolio-item" id="memo"> <h3>1. Professional Purpose Memo</h3>
+                    <div class="item-content">
+                        <div class="item-description">
+                            <h4>Assignment Summary & Commentary</h4>
+                            <p><strong>Summary:</strong> [Provide a brief summary of the Professional Purpose Memo assignment goals and requirements here.]</p>
+                            <p><strong>Commentary & Learning:</strong> [Describe what you learned from completing this assignment. What skills did you practice or develop? How did it clarify your professional purpose or understanding of workplace communication?]</p>
+                        </div>
+                        <div class="item-preview">
+                            <a href="professional_purpose_memo.pdf" target="_blank" class="btn btn-primary">[View Memo PDF]</a>
+                            <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362965421187141832/image.png?ex=68044ff7&is=6802fe77&hm=b078baa5c0f1a927fbcdd220fa21b9431ced04c8bd189be52f00387c722088c3&"
+                                 alt="Preview of Professional Purpose Memo"
+                                 class="doc-preview-image"
+                                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Memo<br>Preview<br>Error</div> <p><small>[Replace link above with the actual filename of your PDF (e.g., 'memo.pdf'). Place the PDF in the same folder as this HTML file when hosting.]</small></p>
+                        </div>
                     </div>
-                    <div class="item-preview">
-                        <a href="professional_purpose_memo.pdf" target="_blank" class="btn btn-primary">[View Memo PDF]</a>
-                        <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362965421187141832/image.png?ex=68044ff7&is=6802fe77&hm=b078baa5c0f1a927fbcdd220fa21b9431ced04c8bd189be52f00387c722088c3&"
-                             alt="Preview of Professional Purpose Memo"
-                             class="doc-preview-image"
-                             onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Memo<br>Preview<br>Error</div> <p><small>[Replace link above with the actual filename of your PDF (e.g., 'memo.pdf'). Place the PDF in the same folder as this HTML file when hosting.]</small></p>
-                    </div>
-                </div>
-            </article>
+                </article>
 
-            <article class="portfolio-item" id="job-app"> <h3>2. Job Application Package</h3>
-                 <div class="item-content">
-                    <div class="item-description">
-                        <h4>Assignment Summary & Commentary</h4>
-                        <p><strong>Summary:</strong> [Provide a brief summary of the Job Application Package assignment goals, focusing on the resume and LinkedIn profile components.]</p>
-                        <p><strong>Commentary & Learning:</strong> [Describe what you learned about tailoring application materials, presenting yourself professionally online (LinkedIn), and the importance of clear, concise writing in this context. Remove any sensitive contact information before publishing.]</p>
+                <article class="portfolio-item" id="job-app"> <h3>2. Job Application Package</h3>
+                     <div class="item-content">
+                        <div class="item-description">
+                            <h4>Assignment Summary & Commentary</h4>
+                            <p><strong>Summary:</strong> [Provide a brief summary of the Job Application Package assignment goals, focusing on the resume and LinkedIn profile components.]</p>
+                            <p><strong>Commentary & Learning:</strong> [Describe what you learned about tailoring application materials, presenting yourself professionally online (LinkedIn), and the importance of clear, concise writing in this context. Remove any sensitive contact information before publishing.]</p>
+                        </div>
+                        <div class="item-preview">
+                            <a href="resume.pdf" target="_blank" class="btn btn-primary">[View Resume PDF]</a>
+                            <a href="https://www.linkedin.com/in/kennedy-gregg-52543128a/" target="_blank" class="btn btn-secondary">View LinkedIn</a>
+                            <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362966300439220445/image.png?ex=680450c8&is=6802ff48&hm=54674effb238f111d174813f7fcb2d3b9155f1e657205dfafff2067ae197c6d3&"
+                                 alt="Preview of Resume"
+                                 class="doc-preview-image"
+                                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Resume<br>Preview<br>Error</div> <p><small>[Ensure your resume PDF is named 'resume.pdf' or update the link. Double-check both links and remove any private info from the resume.]</small></p>
+                        </div>
                     </div>
-                    <div class="item-preview">
-                        <a href="resume.pdf" target="_blank" class="btn btn-primary">[View Resume PDF]</a>
-                        <a href="https://www.linkedin.com/in/kennedy-gregg-52543128a/" target="_blank" class="btn btn-secondary">View LinkedIn</a>
-                        <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362966300439220445/image.png?ex=680450c8&is=6802ff48&hm=54674effb238f111d174813f7fcb2d3b9155f1e657205dfafff2067ae197c6d3&"
-                             alt="Preview of Resume"
-                             class="doc-preview-image"
-                             onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Resume<br>Preview<br>Error</div> <p><small>[Ensure your resume PDF is named 'resume.pdf' or update the link. Double-check both links and remove any private info from the resume.]</small></p>
-                    </div>
-                </div>
-            </article>
+                </article>
 
-            <article class="portfolio-item" id="guide"> <h3>3. Digital Survivor’s Guide</h3>
-                 <div class="item-content">
-                    <div class="item-description">
-                        <h4>Assignment Summary & Commentary</h4>
-                        <p><strong>Summary:</strong> [Provide a brief summary of the Digital Survivor's Guide assignment. What was its purpose? Who was the audience?]</p>
-                        <p><strong>Commentary & Learning:</strong> [Discuss what you learned about instructional writing, user-centered design, information architecture, or specific technical skills related to creating the guide. How did you consider the user's needs?]</p>
+                <article class="portfolio-item" id="guide"> <h3>3. Digital Survivor’s Guide</h3>
+                     <div class="item-content">
+                        <div class="item-description">
+                            <h4>Assignment Summary & Commentary</h4>
+                            <p><strong>Summary:</strong> [Provide a brief summary of the Digital Survivor's Guide assignment. What was its purpose? Who was the audience?]</p>
+                            <p><strong>Commentary & Learning:</strong> [Discuss what you learned about instructional writing, user-centered design, information architecture, or specific technical skills related to creating the guide. How did you consider the user's needs?]</p>
+                        </div>
+                        <div class="item-preview">
+                            <a href="digital_survivors_guide.pdf" target="_blank" class="btn btn-primary">[View Guide PDF]</a>
+                            <div class="doc-placeholder">PDF<br>Preview</div>
+                             <p><small>[Replace link above with the filename of your guide PDF.]</small></p>
+                        </div>
                     </div>
-                    <div class="item-preview">
-                        <a href="digital_survivors_guide.pdf" target="_blank" class="btn btn-primary">[View Guide PDF]</a>
-                        <div class="doc-placeholder">PDF<br>Preview</div>
-                         <p><small>[Replace link above with the filename of your guide PDF.]</small></p>
-                    </div>
-                </div>
-            </article>
+                </article>
 
-            <article class="portfolio-item" id="project"> <h3>4. Significant Course Project/Essay/Presentation</h3>
-                <div class="item-content">
-                    <div class="item-description">
-                        <h4>Assignment Summary & Commentary</h4>
-                        <p><strong>Project Title:</strong> [Enter the title of the project/essay/presentation you chose]</p>
-                        <p><strong>Course:</strong> [Mention the course this work is from]</p>
-                        <p><strong>Summary:</strong> [Provide a brief summary of this chosen work. What were its objectives? What did you create or argue?]</p>
-                        <p><strong>Commentary & Learning:</strong> [Explain why you chose this piece and deem it important to your field. What skills (technical, writing, research, presentation) does it demonstrate? What did you learn from it? Remove any private/sensitive info.]</p>
+                <article class="portfolio-item" id="project"> <h3>4. Significant Course Project/Essay/Presentation</h3>
+                    <div class="item-content">
+                        <div class="item-description">
+                            <h4>Assignment Summary & Commentary</h4>
+                            <p><strong>Project Title:</strong> [Enter the title of the project/essay/presentation you chose]</p>
+                            <p><strong>Course:</strong> [Mention the course this work is from]</p>
+                            <p><strong>Summary:</strong> [Provide a brief summary of this chosen work. What were its objectives? What did you create or argue?]</p>
+                            <p><strong>Commentary & Learning:</strong> [Explain why you chose this piece and deem it important to your field. What skills (technical, writing, research, presentation) does it demonstrate? What did you learn from it? Remove any private/sensitive info.]</p>
+                        </div>
+                         <div class="item-preview">
+                             <a href="course_project.pdf" target="_blank" class="btn btn-primary">[View Project PDF]</a>
+                            <div class="doc-placeholder">PDF/Link<br>Preview</div>
+                            <p><small>[Replace link above with the filename of your project PDF. Ensure all private info is removed.]</small></p>
+                        </div>
                     </div>
-                     <div class="item-preview">
-                         <a href="course_project.pdf" target="_blank" class="btn btn-primary">[View Project PDF]</a>
-                        <div class="doc-placeholder">PDF/Link<br>Preview</div>
-                        <p><small>[Replace link above with the filename of your project PDF. Ensure all private info is removed.]</small></p>
-                    </div>
-                </div>
-            </article>
+                </article>
 
-            <p style="margin-top: 2em;"><em>[Remember to cite any borrowed material (images, quotes) not from an open source, if applicable, perhaps in a small note here or near the item.]</em></p>
-
+                <p style="margin-top: 2em;"><em>[Remember to cite any borrowed material (images, quotes) not from an open source, if applicable, perhaps in a small note here or near the item.]</em></p>
+            </div>
         </section>
 
     </main>
@@ -742,7 +754,10 @@
 
             // Renderer setup
             renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight); // Full viewport size
+             // Add checks for valid dimensions during initialization
+             const initialWidth = window.innerWidth || 1; // Use 1 as fallback
+             const initialHeight = window.innerHeight || 1;
+            renderer.setSize(initialWidth, initialHeight); // Full viewport size
             renderer.setPixelRatio(window.devicePixelRatio);
 
             // --- Create Particles ---
@@ -755,8 +770,8 @@
             const color3 = new THREE.Color('#FFFFFF');
 
             // Calculate spread based on viewport (approximate)
-            const spreadX = window.innerWidth * 1.5; // Wider spread
-            const spreadY = window.innerHeight * 1.5; // Taller spread
+            const spreadX = initialWidth * 1.5; // Wider spread
+            const spreadY = initialHeight * 1.5; // Taller spread
             const spreadZ = 800; // Depth spread
 
             for (let i = 0; i < particleCount; i++) {
@@ -814,14 +829,15 @@
             }
 
             // Render only if renderer exists
-             if (renderer) {
+             if (renderer && scene && camera) { // Add checks for scene and camera
                 renderer.render(scene, camera);
              }
         }
 
         // Handle window resize - Update based on window size
         function onWindowResize() {
-             if (!renderer || !camera) return; // Check if elements exist
+             // Add checks for renderer and camera existence
+             if (!renderer || !camera) return;
 
              const width = window.innerWidth;
              const height = window.innerHeight;
