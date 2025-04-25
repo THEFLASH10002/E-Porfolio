@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kennedy Gregg - E-Portfolio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* --- Basic Reset & Root Variables --- */
         :root {
@@ -30,27 +31,27 @@
         }
 
         html {
-            scroll-behavior: smooth; /* Still useful if pages are long */
+            scroll-behavior: smooth; /* Enable smooth scrolling for anchor links */
         }
 
         body {
             font-family: var(--body-font);
             line-height: 1.6;
             color: var(--text-color);
-            background-color: var(--background-color); /* Updated to black */
-            position: relative; /* Needed for absolute/fixed positioning context */
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            background-color: var(--background-color); /* Black background */
+            position: relative; /* Needed for positioning context (e.g., fixed canvas) */
+            overflow-x: hidden; /* Prevent horizontal scrollbars */
         }
 
         /* --- Canvas Styling (Full Background) --- */
         #bg-canvas {
-            position: fixed; /* Fixed position to cover viewport */
+            position: fixed; /* Fixed position to cover the entire viewport */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Place behind all other content */
-            display: block; /* Remove potential extra space */
+            z-index: -1; /* Place the canvas behind all other content */
+            display: block; /* Ensure it behaves like a block element */
         }
 
 
@@ -63,7 +64,7 @@
         }
 
         h1 { font-size: 3rem; margin-bottom: 0.3em; color: var(--heading-color); font-weight: bold;}
-        h1 .highlight { color: var(--primary-color); } /* Highlight part of the name */
+        h1 .highlight { color: var(--primary-color); } /* Style for highlighted text in h1 */
         /* Adjusted h2 margin as it's now inside .container or .reflection-content */
         h2 { font-size: 2.2rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.3em; margin-top: 0;}
         h3 { font-size: 1.6rem; color: var(--secondary-color); }
@@ -71,7 +72,7 @@
 
         p {
             margin-bottom: 1em;
-            max-width: 65ch; /* Improve readability */
+            max-width: 65ch; /* Limit paragraph width for better readability */
             /* Center paragraph text if parent is text-align: center */
             margin-left: auto;
             margin-right: auto;
@@ -86,43 +87,43 @@
         a {
             color: var(--primary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease; /* Smooth color transition on hover */
         }
 
         a:hover, a:focus {
-            color: #FF8A8A; /* Lighter accent on hover */
+            color: #FF8A8A; /* Lighter accent color on hover/focus */
         }
 
         /* --- Layout & Containers --- */
         .container {
-            max-width: 1100px; /* Wider container for modern look */
-            margin-left: auto;  /* Keep content centered */
+            max-width: 1100px; /* Maximum width of the main content area */
+            margin-left: auto;  /* Center the container horizontally */
             margin-right: auto;
-            padding-left: 20px; /* Add padding */
+            padding-left: 20px; /* Add horizontal padding */
             padding-right: 20px;
-            position: relative; /* Ensure content stays above background */
-            z-index: 1; /* Above canvas within the same stacking context */
+            position: relative; /* Ensure content stays above the background canvas */
+            z-index: 1; /* Stacking context: above the canvas */
         }
 
         /* --- Navigation --- */
         nav {
-            background-color: rgba(0, 0, 0, 0.8); /* Slightly darker semi-transparent background */
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
             padding: 15px 0;
-            position: fixed;
+            position: fixed; /* Keep navigation fixed at the top */
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000; /* Above everything else */
-            backdrop-filter: blur(5px); /* Frosted glass effect */
-            border-bottom: 1px solid var(--border-color);
+            z-index: 1000; /* Ensure navigation is above all other content */
+            backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+            -webkit-backdrop-filter: blur(5px); /* Safari prefix */
+            border-bottom: 1px solid var(--border-color); /* Subtle bottom border */
         }
 
         nav .container {
             display: flex;
-            justify-content: space-between; /* Pushes logo/name and links apart */
+            justify-content: space-between; /* Space out logo and links */
             align-items: center;
-            /* Container inside nav doesn't need z-index */
-            position: static;
+            position: static; /* Reset position within the nav */
         }
 
         nav .nav-logo a {
@@ -131,31 +132,32 @@
              color: var(--heading-color);
              text-decoration: none;
         }
-         nav .nav-logo a .highlight { color: var(--primary-color); }
+         nav .nav-logo a .highlight { color: var(--primary-color); } /* Highlight in nav logo */
 
         nav ul {
-            list-style: none;
+            list-style: none; /* Remove default list bullets */
             display: flex;
             align-items: center;
         }
 
         nav ul li {
-            margin: 0 15px;
+            margin: 0 15px; /* Spacing between navigation items */
         }
 
         nav ul li a {
             color: var(--text-color);
             font-weight: bold;
             font-size: 1rem;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: color 0.3s ease, background-color 0.3s ease;
+            padding: 8px 12px; /* Padding around nav links */
+            border-radius: 4px; /* Rounded corners for links */
+            transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
             cursor: pointer; /* Indicate clickable */
         }
 
+        /* Styles for active/hovered navigation links */
         nav ul li a:hover,
         nav ul li a:focus,
-        nav ul li a.active { /* Style for active page link */
+        nav ul li a.active {
             color: var(--primary-color);
             background-color: rgba(255, 107, 107, 0.1); /* Subtle background highlight */
             text-decoration: none;
@@ -163,19 +165,18 @@
 
         /* --- Header / Hero Section --- */
         header#home-page {
-            min-height: 90vh; /* Make header take significant screen height */
+            min-height: 90vh; /* Make header take up significant viewport height */
             display: flex;
             align-items: center; /* Vertically center content */
             justify-content: center; /* Horizontally center content */
-            padding-top: 80px; /* Account for fixed nav */
+            padding-top: 80px; /* Account for the fixed navigation bar height */
             text-align: center; /* Center text within the header */
-            position: relative; /* Keep relative for z-index */
-            /* overflow: hidden; */ /* Remove overflow hidden */
-            background-color: transparent; /* Let canvas show through */
-            z-index: 1; /* Ensure header content is above canvas */
+            position: relative; /* Keep relative positioning for z-index */
+            background-color: transparent; /* Allow the background canvas to show through */
+            z-index: 1; /* Ensure header content is above the canvas */
         }
 
-        /* Ensure header content (.container) is above the absolute positioned canvas */
+        /* Ensure header content (.container) is above the fixed background canvas */
         header#home-page > .container {
              position: relative;
              z-index: 1;
@@ -183,33 +184,34 @@
 
 
         .hero-content {
-            /* Removed flex properties as parent header is now flex center */
+            /* Centering is handled by the parent header's flex properties */
             width: 100%;
-            max-width: 800px; /* Limit width of centered text block */
+            max-width: 800px; /* Limit the width of the centered text block */
         }
 
         .hero-text {
-             /* Removed flex properties */
              width: 100%; /* Allow text block to use container width */
-             max-width: 100%; /* Override previous max-width */
+             max-width: 100%; /* Override any potential inherited max-width */
         }
 
-        /* .hero-image div is removed */
+        /* .hero-image div is removed from HTML, so no style needed */
 
         .hero-buttons {
-            margin-top: 2em;
+            margin-top: 2em; /* Space above the buttons */
+            margin-bottom: 1.5em; /* Add space below buttons before icons */
         }
 
+        /* --- Button Styles --- */
         .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            border-radius: 5px;
+            display: inline-block; /* Allow setting padding/margin */
+            padding: 12px 25px; /* Button padding */
+            border-radius: 5px; /* Rounded corners */
             font-weight: bold;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
             cursor: pointer;
-            margin: 5px 10px; /* Adjusted margin for centered layout */
-            border: none;
+            margin: 5px 10px; /* Spacing around buttons */
+            border: none; /* Remove default border */
         }
 
         .btn-primary {
@@ -217,77 +219,94 @@
             color: var(--heading-color);
         }
         .btn-primary:hover {
-            background-color: #FF8A8A;
+            background-color: #FF8A8A; /* Lighter primary color on hover */
             color: var(--heading-color);
-            transform: translateY(-2px);
-             box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+            transform: translateY(-2px); /* Slight upward lift on hover */
+             box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3); /* Add shadow on hover */
         }
 
         .btn-secondary {
             background-color: transparent;
             color: var(--secondary-color);
-            border: 2px solid var(--secondary-color);
+            border: 2px solid var(--secondary-color); /* Border matching secondary color */
         }
         .btn-secondary:hover {
             background-color: var(--secondary-color);
-            color: var(--background-color); /* Text becomes black on hover */
-             transform: translateY(-2px);
-             box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3);
+            color: var(--background-color); /* Text becomes background color on hover */
+             transform: translateY(-2px); /* Slight upward lift */
+             box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3); /* Add shadow */
+        }
+
+        /* --- Social Icons --- */
+        .social-icons {
+            margin-top: 1.5em; /* Space above the icons */
+        }
+
+        .social-icons a {
+            color: var(--text-color); /* Use standard text color */
+            font-size: 1.8rem; /* Icon size */
+            margin: 0 15px; /* Spacing between icons */
+            transition: color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+            display: inline-block; /* Needed for transform */
+        }
+
+        .social-icons a:hover,
+        .social-icons a:focus {
+            color: var(--secondary-color); /* Change color on hover */
+            transform: scale(1.1); /* Slightly enlarge icon on hover */
         }
 
 
         /* --- Page Content Styling & Switching --- */
-        /* Main element is now full width */
         main.page-content {
-            padding-top: 40px; /* Add space below nav */
+            padding-top: 40px; /* Add space below the fixed navigation */
             position: relative; /* Ensure content stays above fixed background */
             z-index: 1;
             background-color: transparent; /* Allow canvas to show through */
-            border-top: 1px solid var(--glass-border); /* Separator line */
+            border-top: 1px solid var(--glass-border); /* Subtle separator line below nav */
         }
 
         .page {
-            display: none; /* Hide pages by default */
-            animation: fadeIn 0.5s ease-in-out; /* Add fade-in effect */
-            padding-top: 40px; /* Add padding above section content */
-            padding-bottom: 40px; /* Add padding at the bottom of each page */
-            position: relative; /* Needed for potential pseudo-elements */
-            /* overflow: hidden; */ /* Remove overflow hidden */
+            display: none; /* Hide all pages by default */
+            animation: fadeIn 0.5s ease-in-out; /* Add fade-in animation */
+            padding-top: 40px; /* Padding at the top of each page section */
+            padding-bottom: 40px; /* Padding at the bottom of each page section */
+            position: relative; /* Needed for potential pseudo-elements or positioning */
         }
 
         .page.active {
-            display: block; /* Show active page */
+            display: block; /* Show the currently active page */
         }
 
+        /* Fade-in animation keyframes */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- Glass Box Base Style --- */
+        /* Reusable style for content containers with a glass effect */
         .glass-box {
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(15px); /* Increased blur */
-            -webkit-backdrop-filter: blur(15px); /* Safari */
-            border: 1px solid var(--glass-border); /* Updated border color */
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
+            background-color: var(--glass-bg); /* Semi-transparent background */
+            backdrop-filter: blur(15px); /* Increased blur effect */
+            -webkit-backdrop-filter: blur(15px); /* Safari prefix */
+            border: 1px solid var(--glass-border); /* Subtle border */
+            padding: 30px; /* Padding inside the box */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: var(--shadow); /* Apply shadow */
         }
 
 
         /* --- About Section Specifics --- */
         #about-page .about-content {
             display: flex;
-            flex-direction: row; /* Keep side-by-side layout */
-            align-items: flex-start;
-            gap: 30px;
-            /* margin-top: 20px; */ /* Removed, handled by section padding */
+            flex-direction: row; /* Default layout: image and text side-by-side */
+            align-items: flex-start; /* Align items to the top */
+            gap: 30px; /* Space between image and text */
         }
-        /* Apply glass box style */
+        /* Apply glass box style to the about content container */
         #about-page .about-content {
-             composes: glass-box; /* Non-standard, just for reference */
-             /* Manually apply glass styles */
+             /* Manually apply glass styles (alternative to 'composes') */
              background-color: var(--glass-bg);
              backdrop-filter: blur(15px);
              -webkit-backdrop-filter: blur(15px);
@@ -297,58 +316,59 @@
              box-shadow: var(--shadow);
         }
         .about-image-placeholder {
-             width: 250px; /* Maintain defined width */
-             height: auto; /* Allow height to adjust */
-             min-height: 200px; /* Ensure minimum height */
-             object-fit: cover; /* Cover the area, might crop */
-             background-color: rgba(0,0,0,0.2); /* Darker placeholder */
-             display: block; /* Changed from flex to block for simple image */
-             color: #aaa; /* Fallback text color */
+             width: 250px; /* Fixed width for the image area */
+             height: auto; /* Allow height to adjust based on aspect ratio */
+             min-height: 200px; /* Ensure a minimum height */
+             object-fit: cover; /* Scale image to cover the area, may crop */
+             background-color: rgba(0,0,0,0.2); /* Dark placeholder background */
+             display: block; /* Treat as a block element */
+             color: #aaa; /* Fallback text color if image fails */
              font-style: italic;
              text-align: center;
-             border-radius: 5px;
-             background-size: cover;
-             background-position: center;
-             flex-shrink: 0; /* Prevent image from shrinking */
+             border-radius: 5px; /* Rounded corners */
+             background-size: cover; /* Ensure background image covers */
+             background-position: center; /* Center background image */
+             flex-shrink: 0; /* Prevent image container from shrinking */
         }
         .about-text {
-            flex: 1;
+            flex: 1; /* Allow text area to take remaining space */
         }
 
         /* --- Reflection Section Specifics --- */
         #reflection-page .reflection-content {
             /* Apply glass box style */
              background-color: var(--glass-bg);
-             backdrop-filter: blur(15px); /* Increased blur */
+             backdrop-filter: blur(15px);
              -webkit-backdrop-filter: blur(15px);
              border: 1px solid var(--glass-border);
              padding: 30px 40px; /* More horizontal padding */
              border-radius: 10px;
              box-shadow: var(--shadow);
-            max-width: 900px; /* Limit width for readability */
-            /* margin: 20px auto; */ /* Removed, handled by container */
+            max-width: 900px; /* Limit width for better readability */
+            margin-left: auto; /* Center the box */
+            margin-right: auto;
         }
-         /* Title inside the box */
+         /* Title inside the reflection box */
          #reflection-page .reflection-content h2 {
              text-align: center; /* Center the heading */
-             border-bottom: none; /* Remove default h2 border */
+             border-bottom: none; /* Remove the default h2 border */
              margin-top: 0; /* Remove default top margin */
-             margin-bottom: 1.5em; /* Add space below title */
+             margin-bottom: 1.5em; /* Space below title */
              font-size: 2rem; /* Adjust size if needed */
              color: var(--heading-color); /* Ensure title color */
          }
          /* Style paragraphs within reflection content */
         #reflection-page .reflection-content p {
-            text-align: center; /* Centered text as requested */
+            text-align: center; /* Center paragraph text */
             margin-left: auto; /* Ensure centering */
             margin-right: auto;
             margin-bottom: 1.5em; /* Increased paragraph spacing */
-            line-height: 1.7; /* Slightly increased line height */
+            line-height: 1.7; /* Slightly increased line height for readability */
         }
         /* Keyword highlighting style */
         .highlight-text {
             color: var(--primary-color);
-            font-weight: 600; /* Make it slightly bolder */
+            font-weight: 600; /* Make highlighted text slightly bolder */
         }
 
 
@@ -356,124 +376,135 @@
         .portfolio-item {
             /* Apply glass box style */
              background-color: var(--glass-bg);
-             backdrop-filter: blur(15px); /* Increased blur */
+             backdrop-filter: blur(15px);
              -webkit-backdrop-filter: blur(15px);
              border: 1px solid var(--glass-border);
              padding: 25px;
              border-radius: 10px;
              box-shadow: var(--shadow);
 
-            margin-bottom: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px; /* Space between portfolio items */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions on hover */
         }
 
         .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Slightly stronger shadow on hover */
+            transform: translateY(-5px); /* Lift item slightly on hover */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
         }
 
         .item-content {
             display: flex;
-            flex-direction: row; /* Default side-by-side */
-            gap: 25px;
+            flex-direction: row; /* Default: description and preview side-by-side */
+            gap: 25px; /* Space between description and preview */
         }
 
         .item-description {
-            flex: 2;
+            flex: 2; /* Description takes more space */
         }
-        /* Ensure strong tag within description is visible */
+        /* Ensure strong tag within description is visible and styled */
         .item-description p strong {
-            color: var(--secondary-color); /* Or another contrasting color */
+            color: var(--secondary-color); /* Use secondary color for emphasis */
         }
 
         .item-preview {
-            flex: 1;
+            flex: 1; /* Preview takes less space */
             text-align: center;
             padding: 15px;
-            /* background-color: #3a3a3a; */ /* Remove solid background */
             background-color: rgba(0,0,0,0.1); /* Subtle dark background for contrast */
             border-radius: 5px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center items horizontally */
+            justify-content: center; /* Center items vertically */
         }
 
-        .item-preview a.btn { /* Style portfolio links like buttons */
+        /* Style links within the preview area like buttons */
+        .item-preview a.btn {
              margin-bottom: 15px;
-             width: 80%; /* Make buttons take more width */
+             width: 80%; /* Make buttons take more width within the preview */
         }
-         .item-preview a.btn-secondary { /* Specific style for secondary buttons here */
+         /* Specific style for secondary buttons in the preview */
+         .item-preview a.btn-secondary {
               margin-top: 10px; /* Space between primary/secondary links */
          }
 
-        .doc-placeholder { /* Style for other placeholders */
+        /* Style for document placeholders (if image fails or isn't provided) */
+        .doc-placeholder {
             width: 80px;
             height: 105px; /* Adjusted aspect ratio */
-            background-color: rgba(255,255,255,0.1); /* Lighter placeholder */
+            background-color: rgba(255,255,255,0.1); /* Lighter placeholder background */
             margin-top: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.2); /* Subtle border */
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.8rem;
             color: #ccc;
             text-align: center;
-            border-radius: 5px; /* Slightly rounded corners */
+            border-radius: 5px;
         }
-        .doc-preview-image { /* Style for actual preview images */
-             max-width: 100%; /* Fit container width */
-             max-height: 150px; /* Limit height */
+        /* Style for actual preview images */
+        .doc-preview-image {
+             max-width: 100%; /* Ensure image fits container width */
+             max-height: 150px; /* Limit image height */
              height: auto; /* Maintain aspect ratio */
              margin-top: 15px; /* Space above image */
-             border-radius: 5px; /* Slightly rounded corners */
+             border-radius: 5px;
              border: 1px solid rgba(255,255,255,0.2); /* Match placeholder style */
         }
 
         /* --- Footer --- */
         footer {
-            background-color: #111111; /* Even darker footer */
+            background-color: #111111; /* Even darker background for footer */
             color: var(--text-color);
             text-align: center;
             padding: 20px 0;
-            margin-top: 60px;
-            border-top: 1px solid var(--border-color);
-            position: relative; /* Ensure footer stays above background */
+            margin-top: 60px; /* Space above the footer */
+            border-top: 1px solid var(--border-color); /* Top border */
+            position: relative; /* Ensure footer stays above background canvas */
             z-index: 1;
         }
 
         /* --- Responsive Design --- */
+        /* Medium screens (tablets, smaller desktops) */
         @media (max-width: 992px) {
-             /* Hero content already centered, adjust max-width if needed */
-             .hero-content { max-width: 90%; }
+             .hero-content { max-width: 90%; } /* Adjust hero text width */
              h1 { font-size: 2.5rem; }
              p.subtitle { font-size: 1.1rem; }
-             #reflection-page .reflection-content { max-width: 95%; padding: 25px 30px;}
+             #reflection-page .reflection-content { max-width: 95%; padding: 25px 30px;} /* Adjust reflection box */
         }
 
+        /* Small screens (tablets in portrait, large phones) */
         @media (max-width: 768px) {
+            /* Stack navigation items vertically */
             nav .container { flex-direction: column; }
             nav ul { margin-top: 10px; flex-wrap: wrap; justify-content: center;} /* Allow nav links to wrap */
             nav ul li { margin: 5px 8px; } /* Adjust spacing for wrapped items */
 
             header#home-page { min-height: 80vh; padding: 100px 0 40px 0; } /* Adjust hero padding */
 
+            /* Stack about section content */
             #about-page .about-content { flex-direction: column; align-items: center; }
             .about-image-placeholder { width: 80%; max-width: 300px; margin-bottom: 20px;}
             .about-text { text-align: center; }
 
+            /* Stack portfolio item content */
             .item-content { flex-direction: column; }
             .item-preview { margin-top: 20px; }
         }
 
+        /* Extra small screens (phones) */
          @media (max-width: 480px) {
              h1 { font-size: 2rem; }
              h2 { font-size: 1.8rem; }
-             .btn { padding: 10px 20px; width: 90%; margin-bottom: 10px; margin-right: 0;} /* Adjust button width */
+             /* Make buttons take full width */
+             .btn { padding: 10px 20px; width: 90%; margin-bottom: 10px; margin-left: 0; margin-right: 0;}
              .hero-content { max-width: 95%; }
-             nav ul li a { font-size: 0.9rem; padding: 6px 8px;}
-             #reflection-page .reflection-content { padding: 20px;}
-              #reflection-page .reflection-content p { text-align: left;} /* Revert centering on small screens for readability */
+             nav ul li a { font-size: 0.9rem; padding: 6px 8px;} /* Smaller nav links */
+             #reflection-page .reflection-content { padding: 20px;} /* Less padding in reflection box */
+              /* Revert centered paragraphs in reflection on small screens for better readability */
+              #reflection-page .reflection-content p { text-align: left;}
+             .social-icons a { font-size: 1.6rem; margin: 0 10px; } /* Slightly smaller icons on mobile */
          }
 
     </style>
@@ -495,19 +526,26 @@
         </div>
     </nav>
 
-    <header id="home-page" class="page active">
-         <div class="container">
+    <header id="home-page" class="page active"> <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>Hi, I'm <span class="highlight">Kennedy</span> Gregg</h1>
                     <p class="subtitle">Computer Science Scholar at Howard University</p>
                     <p>
-                        [Write a brief, engaging intro here - 2-3 sentences. Maybe mention your key skills or what drives you. Example: Passionate about making complex information clear and accessible through effective technical writing and design.]
+                        Passionate about inspiring the next generation of tech leaders through hands on coding, game development, and mentorship. I thrive at the intersection of education and innovation  helping students turn curiosity into creation, one line of code at a time.
                     </p>
                     <div class="hero-buttons">
-                        <a href="resume.pdf" target="_blank" class="btn btn-primary">Download Resume</a>
+                        <a href="KennedysResume (1).pdf" target="_blank" class="btn btn-primary">Download Resume</a>
                         <a href="#portfolio" class="btn btn-secondary nav-link" data-target="portfolio-page">View My Work</a>
                     </div>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/kennedy-gregg-52543128a/" target="_blank" aria-label="LinkedIn Profile">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/THEFLASH10002?tab=repositories" target="_blank" aria-label="GitHub Profile">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        </div>
                 </div>
             </div>
         </div>
@@ -518,113 +556,124 @@
         <section id="about-page" class="page">
              <div class="container">
                  <h2>About Me</h2>
-                <div class="about-content"> <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362945297185247352/image0.jpg?ex=68043d39&is=6802ebb9&hm=a2421d8f5b9c717f4a22a596242648291b441fc08237fbca5e2b0966d6314780&"
-                          alt="About section visual placeholder"
-                          class="about-image-placeholder"
-                          onerror="this.onerror=null; this.src='https://placehold.co/250x200/444444/aaaaaa?text=Image+Error';">
-                     <div class="about-text">
-                         <p>
-                             [Write a brief professional bio here. You could mention your current role/studies (e.g., Computer Science Scholar at Howard University), key technical skills (like Python, AI/ML, C++ from your resume), and main interests within your field or technical communication. Keep it concise - perhaps 1-2 paragraphs.]
-                         </p>
-                          <p>
-                             [Maybe briefly mention your passion for mentorship or supporting diversity in tech, drawing inspiration from your Professional Memo.]
-                         </p>
-
-                    </div>
-                </div>
-            </div>
+                 <div class="about-content">
+                     <img src="kennedypic2.jpg"
+                           alt="Kennedy Gregg sitting on a fence outdoors"
+                           class="about-image-placeholder"
+                           onerror="this.onerror=null; this.src='https://placehold.co/250x300/444444/aaaaaa?text=Image+Error';"> <div class="about-text">
+                           <p>
+                            I’m Kennedy Gregg, a Computer Science student at Howard University with a deep interest in artificial intelligence, machine learning, and game development. I’ve worked with technologies like Python, C++, JavaScript, and Unity, and I’m always exploring new ways to combine creativity with code.
+                           </p>
+                           <p>
+                            Beyond my technical work, I’m passionate about mentorship and creating inclusive spaces in tech. As a Code Sensei at Code Ninjas, I’ve had the opportunity to guide young students through their first lines of code, helping them discover the joy of building and problem-solving. Supporting diversity in tech isn’t just important to me  it’s a core part of why I do what I do.
+                           </p>
+                      </div>
+                 </div>
+             </div>
         </section>
 
         <section id="reflection-page" class="page">
              <div class="container">
-                <div class="reflection-content">
-                     <h2>Reflective Essay (Subject To Change Alot)</h2>
-                     <p>I once considered writing to be a utilitarian thing prior to this class—a means for academics to convey ideas and get work done, that's all. But over the course of the semester, I've developed a much greater respect for writing as a craft, especially in technical communication. Now, I view technical writing as a bridge—between people, between goals, and between ideas. It is not just a matter of correctness and clarity, but of empathy, accessibility, and intentional design. I have developed in this course into a more assertive, strategic, and audience-aware writer, and I am now much more attuned to the ways that the words I choose can impact both business outcomes and personal impressions.</p>
-                     <p>At Howard University, I have been repeatedly challenged to communicate with accuracy, professionalism, and pride. This course pushed me harder by requiring me to mold my communication to real-life applications: job searches, giving advice through online formats, and declaring my goals specifically. Each assignment wasn.t just an exercise—it was a way of practicing how to think like a professional in the field, whether it was designing a survivor's guide to online spaces or crafting an intentional resume and LinkedIn profile.</p>
-                     <p>One of the most enlightening pieces of writing for me was the <span class="highlight-text">Professional Purpose Memo</span>. It forced me to step back and articulate what drives me, both academically and professionally. It helped me realize that technical writing is less about what I'm doing, but a way to demonstrate why I'm doing it. It forced me to align my aspirations with my values and helped me see the value in having a clear, consistent message when presenting myself in a professional setting.</p>
-                     <p>The <span class="highlight-text">Job Application Package</span> showed me the technical side of branding: organizing information for quick readability, choosing active verbs, and designing my documents to stand out in a professional manner. It wasn't so much about buzzwords as clarity, credibility, and confidence. I have learned now that a resume or LinkedIn profile is not so much a list—it's a story, and I'm the author.</p>
-                     <p>The <span class="highlight-text">Digital Survivor’s Guide</span> enabled me to stretch both technical and creative muscles at the same time. It reminded me that technical writing needs to be not only clear but usable and accessible to a wide variety of people. Through organizational, tone, and layout choices, I was able to make a topic that could potentially be overwhelming into a helpful, even enjoyable, guide.</p>
-                     <p>Finally, the fourth piece—a project from another class—allowed me to show how I apply technical communication to a broader context. It shows how writing can support research, enable collaboration, and broaden impact across disciplines.</p>
-                     <p>In total, this portfolio reflects my growth as a communicator who values clarity, purpose, and impact. It's not just about being a better writer—it's about being a better professional. I come to writing now knowing that every document can potentially connect, empower, and inform. These are the abilities that I will carry with me to internships, research, and eventually to my professional career. Technical writing has helped me hone my voice and my vision—and now, I am excited about sharing that with the world.</p>
-                </div>
-            </div>
+                 <div class="reflection-content"> <h2>Reflective Essay</h2>
+                      <p>I once considered writing to be a utilitarian thing prior to this class a means for academics to convey ideas and get work done, that's all. But over the course of the semester, I've developed a much greater respect for writing as a craft, especially in technical communication. Now, I view technical writing as a bridge between people, between goals, and between ideas. It is not just a matter of correctness and clarity, but of empathy, accessibility, and intentional design. I have developed in this course into a more assertive, strategic, and audience-aware writer, and I am now much more attuned to the ways that the words I choose can impact both business outcomes and personal impressions.</p>
+                      <p>At Howard University, I have been repeatedly challenged to communicate with accuracy, professionalism, and pride. This course pushed me harder by requiring me to mold my communication to real-life applications: job searches, giving advice through online formats, and declaring my goals specifically. Each assignment wasn.t just an exercise it was a way of practicing how to think like a professional in the field, whether it was designing a survivor's guide to online spaces or crafting an intentional resume and LinkedIn profile.</p>
+                      <p>One of the most enlightening pieces of writing for me was the <span class="highlight-text">Professional Purpose Memo</span>. It forced me to step back and articulate what drives me, both academically and professionally. It helped me realize that technical writing is less about what I'm doing, but a way to demonstrate why I'm doing it. It forced me to align my aspirations with my values and helped me see the value in having a clear, consistent message when presenting myself in a professional setting.</p>
+                      <p>The <span class="highlight-text">Job Application Package</span> showed me the technical side of branding: organizing information for quick readability, choosing active verbs, and designing my documents to stand out in a professional manner. It wasn't so much about buzzwords as clarity, credibility, and confidence. I have learned now that a resume or LinkedIn profile is not so much a list it's a story, and I'm the author.</p>
+                      <p>The <span class="highlight-text">Digital Survivor’s Guide</span> enabled me to stretch both technical and creative muscles at the same time. It reminded me that technical writing needs to be not only clear but usable and accessible to a wide variety of people. Through organizational, tone, and layout choices, I was able to make a topic that could potentially be overwhelming into a helpful, even enjoyable, guide.</p>
+                      <p>Finally, the fourth piece a project from another class allowed me to show how I apply technical communication to a broader context. It shows how writing can support research, enable collaboration, and broaden impact across disciplines.</p>
+                      <p>In total, this portfolio reflects my growth as a communicator who values clarity, purpose, and impact. It's not just about being a better writer it's about being a better professional. I come to writing now knowing that every document can potentially connect, empower, and inform. These are the abilities that I will carry with me to internships, research, and eventually to my professional career. Technical writing has helped me hone my voice and my vision and now, I am excited about sharing that with the world.</p>
+                 </div>
+             </div>
         </section>
 
 
         <section id="portfolio-page" class="page">
              <div class="container">
-                <h2>Portfolio Showcase</h2>
-                <p>This section contains selected works demonstrating my technical communication skills developed during the course.</p>
+                 <h2>Portfolio Showcase</h2>
+                 
 
-                <article class="portfolio-item" id="memo"> <h3>1. Professional Purpose Memo</h3>
-                    <div class="item-content">
-                        <div class="item-description">
-                            <h4>Assignment Summary & Commentary</h4>
-                            <p><strong>Summary:</strong> [Provide a brief summary of the Professional Purpose Memo assignment goals and requirements here.]</p>
-                            <p><strong>Commentary & Learning:</strong> [Describe what you learned from completing this assignment. What skills did you practice or develop? How did it clarify your professional purpose or understanding of workplace communication?]</p>
-                        </div>
-                        <div class="item-preview">
-                            <a href="professional_purpose_memo.pdf" target="_blank" class="btn btn-primary">[View Memo PDF]</a>
-                            <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362965421187141832/image.png?ex=68044ff7&is=6802fe77&hm=b078baa5c0f1a927fbcdd220fa21b9431ced04c8bd189be52f00387c722088c3&"
-                                 alt="Preview of Professional Purpose Memo"
-                                 class="doc-preview-image"
-                                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Memo<br>Preview<br>Error</div> <p><small>[Replace link above with the actual filename of your PDF (e.g., 'memo.pdf'). Place the PDF in the same folder as this HTML file when hosting.]</small></p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="portfolio-item" id="job-app"> <h3>2. Job Application Package</h3>
+                 <article class="portfolio-item" id="memo">
+                     <h3>1. Professional Purpose Memo</h3>
                      <div class="item-content">
-                        <div class="item-description">
-                            <h4>Assignment Summary & Commentary</h4>
-                            <p><strong>Summary:</strong> [Provide a brief summary of the Job Application Package assignment goals, focusing on the resume and LinkedIn profile components.]</p>
-                            <p><strong>Commentary & Learning:</strong> [Describe what you learned about tailoring application materials, presenting yourself professionally online (LinkedIn), and the importance of clear, concise writing in this context. Remove any sensitive contact information before publishing.]</p>
-                        </div>
-                        <div class="item-preview">
-                            <a href="resume.pdf" target="_blank" class="btn btn-primary">[View Resume PDF]</a>
-                            <a href="https://www.linkedin.com/in/kennedy-gregg-52543128a/" target="_blank" class="btn btn-secondary">View LinkedIn</a>
-                            <img src="https://cdn.discordapp.com/attachments/780238739082313737/1362966300439220445/image.png?ex=680450c8&is=6802ff48&hm=54674effb238f111d174813f7fcb2d3b9155f1e657205dfafff2067ae197c6d3&"
-                                 alt="Preview of Resume"
-                                 class="doc-preview-image"
-                                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Resume<br>Preview<br>Error</div> <p><small>[Ensure your resume PDF is named 'resume.pdf' or update the link. Double-check both links and remove any private info from the resume.]</small></p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="portfolio-item" id="guide"> <h3>3. Digital Survivor’s Guide</h3>
-                     <div class="item-content">
-                        <div class="item-description">
-                            <h4>Assignment Summary & Commentary</h4>
-                            <p><strong>Summary:</strong> [Provide a brief summary of the Digital Survivor's Guide assignment. What was its purpose? Who was the audience?]</p>
-                            <p><strong>Commentary & Learning:</strong> [Discuss what you learned about instructional writing, user-centered design, information architecture, or specific technical skills related to creating the guide. How did you consider the user's needs?]</p>
-                        </div>
-                        <div class="item-preview">
-                            <a href="digital_survivors_guide.pdf" target="_blank" class="btn btn-primary">[View Guide PDF]</a>
-                            <div class="doc-placeholder">PDF<br>Preview</div>
-                             <p><small>[Replace link above with the filename of your guide PDF.]</small></p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="portfolio-item" id="project"> <h3>4. Significant Course Project/Essay/Presentation</h3>
-                    <div class="item-content">
-                        <div class="item-description">
-                            <h4>Assignment Summary & Commentary</h4>
-                            <p><strong>Project Title:</strong> [Enter the title of the project/essay/presentation you chose]</p>
-                            <p><strong>Course:</strong> [Mention the course this work is from]</p>
-                            <p><strong>Summary:</strong> [Provide a brief summary of this chosen work. What were its objectives? What did you create or argue?]</p>
-                            <p><strong>Commentary & Learning:</strong> [Explain why you chose this piece and deem it important to your field. What skills (technical, writing, research, presentation) does it demonstrate? What did you learn from it? Remove any private/sensitive info.]</p>
-                        </div>
+                         <div class="item-description">
+                             <h4>Assignment Summary & Commentary</h4>
+                             <p><strong>Summary:</strong> This assignment required crafting a one-page Professional Purpose Memorandum (max 400 words) following standard memo formatting. The memo needed to articulate a clear professional purpose, identify target audiences, and outline actionable goals for the short-term (2 years), mid-term (5 years), and long-term (10-15 years), using concise and professional language.</p>
+                             <p><strong>Commentary & Learning:</strong> Completing this memo was a valuable exercise in self-reflection and strategic communication. It pushed me to define my professional identity, articulate my core values (like mentorship and promoting diversity in tech), and translate aspirations into concrete, time-bound goals. I practiced writing concisely, adhering to specific formatting requirements (memo structure), and maintaining a professional tone while minimizing first-person usage. This assignment reinforced the importance of audience awareness and having a clear narrative when presenting professional plans and purpose.</p>
+                         </div>
                          <div class="item-preview">
-                             <a href="course_project.pdf" target="_blank" class="btn btn-primary">[View Project PDF]</a>
-                            <div class="doc-placeholder">PDF/Link<br>Preview</div>
-                            <p><small>[Replace link above with the filename of your project PDF. Ensure all private info is removed.]</small></p>
-                        </div>
-                    </div>
-                </article>
+                             <a href="Professional Memo (1).pdf" target="_blank" class="btn btn-primary">[View Memo PDF]</a>
+                             <img src="memo1.png"
+                                   alt="Preview of Professional Purpose Memo document"
+                                   class="doc-preview-image"
+                                   onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"> <div class="doc-placeholder" style="display: none;">Memo<br>Preview<br>Error</div> <p><small>' Professional Memo '</small></p>
+                         </div>
+                     </div>
+                 </article>
 
-                <p style="margin-top: 2em;"><em>[Remember to cite any borrowed material (images, quotes) not from an open source, if applicable, perhaps in a small note here or near the item.]</em></p>
-            </div>
+                 <article class="portfolio-item" id="job-app">
+                     <h3>2. Job Application Package</h3>
+                      <div class="item-content">
+                          <div class="item-description">
+                              <h4>Assignment Summary & Commentary</h4>
+                              <p><strong>Summary:</strong> This assignment involved creating a comprehensive job application package tailored to a specific, real job description in my field. The package included the job description and link, a list of relevant coursework, a targeted résumé detailing experiences and skills, a professional cover letter addressed to the hiring manager, and a functional, field-specific LinkedIn profile.</p>
+                              <p><strong>Commentary & Learning:</strong> This project was crucial for understanding the practical application of technical communication in a job search. I learned the importance of analyzing a job description to tailor application materials effectively, using keywords and highlighting relevant experiences. Crafting the résumé emphasized clear, concise, action-oriented language and professional formatting. The cover letter provided practice in persuasive writing and adapting tone for a specific audience (the hiring manager). Developing the LinkedIn profile underscored the significance of maintaining a consistent and professional online presence, showcasing skills and experiences learned throughout my academic career.</p>
+                          </div>
+                          <div class="item-preview">
+                              <a href="KennedysResume (1).pdf" target="_blank" class="btn btn-primary">[View Resume PDF]</a>
+                              <a href="https://www.linkedin.com/in/kennedy-gregg-52543128a/" target="_blank" class="btn btn-secondary">View LinkedIn</a>
+                              <img src="resprev.png"
+                                    alt="Preview of Resume document"
+                                    class="doc-preview-image"
+                                    onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                              <div class="doc-placeholder" style="display: none;">Resume<br>Preview<br>Error</div>
+                              <p><small>' Kennedy's Resume '</small></p>
+                          </div>
+                      </div>
+                 </article>
+
+                 <article class="portfolio-item" id="guide">
+                     <h3>3. Digital Survivor’s Guide</h3>
+                      <div class="item-content">
+                          <div class="item-description">
+                              <h4>Assignment Summary & Commentary</h4>
+                              <p><strong>Summary:</strong> The goal of this assignment was to create a technical "Survival Guide" compiling online communication resources specific to Computer Science. This included identifying and describing three research tools (like databases or foundational texts), three relevant professional societies, and three other useful internet sites, providing a 100-word synopsis for each. The guide required an executive summary, table of contents, list of figures, and an appendix listing job, internship, or scholarship resources, all formatted for usability by students and early-career professionals.</p>
+                              <p><strong>Commentary & Learning:</strong> This project honed my ability to research, evaluate, and curate relevant online resources for a specific audience (fellow CS students/professionals). I practiced technical writing by summarizing complex resources concisely (synopses, executive summary) and organizing information logically using elements like a table of contents. Making decisions about format and style to create a usable and effective document emphasized user-centered design principles. It also reinforced the importance of identifying credible and helpful resources for professional development and navigating the field.</p>
+                          </div>
+                          <div class="item-preview">
+                              <a href="https://theflash10002.github.io/Survival-Guide/#home" target="_blank" class="btn btn-primary">[View Live Guide]</a>
+                              <img src="digitals.png"
+                                   alt="Preview of Digital Survivor's Guide website"
+                                   class="doc-preview-image"
+                                   onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                              <div class="doc-placeholder" style="display: none;">Guide<br>Preview<br>Error</div>
+                               <p><small>' Digital Survival Guide '</small></p>
+                          </div>
+                      </div>
+                 </article>
+
+                 <article class="portfolio-item" id="project">
+                     <h3>4. Significant Course Project/Essay/Presentation</h3>
+                     <div class="item-content">
+                         <div class="item-description">
+                             <h4>Assignment Summary & Commentary</h4>
+                             <p><strong>Project Title:</strong> Cardio Sync (Bison Bytes Hackathon)</p>
+                             <p><strong>Course:</strong> Bison Bytes Hackathon (Extracurricular)</p>
+                             <p><strong>Summary:</strong> Cardio Sync is a web application developed during the Bison Bytes Hackathon to address cardiovascular health disparities, particularly in African American communities. It functions as a smart dashboard for doctors, enabling real-time monitoring of patient vitals (like SpO₂ and blood pressure). Using machine learning (Scikit-learn), it analyzes health trends to predict potential risks and sends proactive alerts, aiming to facilitate early intervention and improve patient outcomes in underserved populations.</p>
+                             <p><strong>Commentary & Learning:</strong> This project was significant as it allowed me to apply technical skills (Django, Python, JavaScript, ML) to a pressing real-world issue directly impacting my community. Collaborating under hackathon pressure honed teamwork and rapid development skills. Integrating backend logic with ML for predictive analysis and presenting complex health data clearly demonstrated my ability to bridge technical development with user-focused communication. Finishing 2nd in the Health Track validated the project's concept and execution, reinforcing the value of using technology for social impact.</p>
+                         </div>
+                          <div class="item-preview">
+                               <a href="https://devpost.com/software/cardio-sync-wcbeao?ref_content=user-portfolio&ref_feature=in_progress" target="_blank" class="btn btn-primary">[View on Devpost]</a>
+                               <img src="cardio.png"
+                                    alt="Preview of Cardio Sync project on Devpost"
+                                    class="doc-preview-image"
+                                    onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                               <div class="doc-placeholder" style="display: none;">Project<br>Preview<br>Error</div>
+                               <p><small>' Cardio Sync'</small></p>
+                          </div>
+                     </div>
+                 </article>
+
+             </div>
         </section>
 
     </main>
@@ -637,24 +686,25 @@
 
     <script>
         // --- Page Switching Logic ---
-        const navLinks = document.querySelectorAll('.nav-link');
-        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link'); // Get all navigation links
+        const pages = document.querySelectorAll('.page'); // Get all page sections
 
+        // Function to show a specific page and hide others
         function showPage(targetId) {
-            // Hide all pages
+            // Hide all pages first
             pages.forEach(page => {
-                page.classList.remove('active');
+                page.classList.remove('active'); // Remove 'active' class to hide
             });
 
-            // Show the target page
+            // Find and show the target page
             const targetPage = document.getElementById(targetId);
             if (targetPage) {
-                targetPage.classList.add('active');
+                targetPage.classList.add('active'); // Add 'active' class to show
             }
 
-             // Update active class on nav links
+             // Update the 'active' class on navigation links
              navLinks.forEach(link => {
-                 // Check if the link's data-target matches the targetId
+                 // Check if the link's data-target matches the currently shown page ID
                  if (link.dataset.target === targetId) {
                      link.classList.add('active');
                  } else {
@@ -662,179 +712,192 @@
                  }
              });
 
-             // Scroll to top of the page content when switching
-             // Use setTimeout to ensure content is visible before scrolling
+             // Scroll to the top of the main content area when switching pages
+             // Use setTimeout to allow content to become visible before scrolling
              setTimeout(() => {
-                 const navHeight = document.querySelector('nav').offsetHeight;
-                 let scrollToElement = document.body; // Default to top of body
+                 const navHeight = document.querySelector('nav').offsetHeight; // Get nav height for offset
+                 let scrollToElement = document.body; // Default scroll target
 
-                 // If not the home page, find the top of the specific page section
+                 // If not the home page, scroll to the top of the main content container
                  if (targetId !== 'home-page' && targetPage) {
-                     // Scroll to the top of the main content area instead of the section itself
                      scrollToElement = document.querySelector('main.page-content');
                  }
 
-                 // Calculate position
+                 // Calculate the scroll position
                  let elementTop = 0;
                  if (scrollToElement) {
+                    // Calculate element's top position relative to the viewport, then add current scroll offset
                     elementTop = window.pageYOffset + scrollToElement.getBoundingClientRect().top;
                  }
 
-                 let scrollToPosition = elementTop - navHeight - 20; // Offset for nav + padding
+                 // Calculate final scroll position, offsetting for the nav bar and adding a little padding
+                 let scrollToPosition = elementTop - navHeight - 20;
 
-                 // Ensure home page scrolls to the very top
+                 // Ensure the home page scrolls exactly to the top
                  if (targetId === 'home-page') {
                      scrollToPosition = 0;
                  }
 
-
+                 // Perform the smooth scroll
                  window.scrollTo({
-                     top: scrollToPosition < 0 ? 0 : scrollToPosition, // Ensure not scrolling to negative values
+                     top: scrollToPosition < 0 ? 0 : scrollToPosition, // Prevent scrolling to negative values
                      behavior: 'smooth'
                  });
-             }, 50); // Small delay
+             }, 50); // Small delay (50ms)
         }
 
-        // Add click listeners to nav links AND the "View My Work" button
+        // Add click event listeners to all navigation links (including the "View My Work" button)
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.preventDefault(); // Prevent default anchor jump
-                const targetPageId = this.dataset.target;
+                e.preventDefault(); // Prevent the default anchor link behavior (jumping)
+                const targetPageId = this.dataset.target; // Get the target page ID from data attribute
                 if (targetPageId) {
-                    showPage(targetPageId);
-                     // Optional: Update URL hash for better history/bookmarking
-                     // history.pushState(null, '', `#${targetPageId.replace('-page', '')}`);
+                    showPage(targetPageId); // Call the function to switch pages
+                    // Optional: Update URL hash for history/bookmarking (uncomment if desired)
+                    // history.pushState(null, '', `#${targetPageId.replace('-page', '')}`);
                 }
             });
         });
 
         // --- Update Copyright Year Dynamically ---
+        // Get the current year and set it in the footer span
         document.getElementById('year').textContent = new Date().getFullYear();
 
 
         // --- Three.js Background Animation ---
-        let scene, camera, renderer, particles; // Removed headerElement reference
+        let scene, camera, renderer, particles; // Declare Three.js variables
 
-        // Function to create a circular texture
+        // Function to create a simple circular texture for particles
         function createCircleTexture() {
-            const size = 64; // Texture size
+            const size = 64; // Texture dimensions
             const canvas = document.createElement('canvas');
             canvas.width = size;
             canvas.height = size;
             const context = canvas.getContext('2d');
             const centerX = size / 2;
             const centerY = size / 2;
-            const radius = size / 2 - 2; // Leave a little padding
+            const radius = size / 2 - 2; // Radius with a small padding
 
+            // Draw a white circle
             context.beginPath();
             context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
             context.fillStyle = 'white'; // Circle color
             context.fill();
 
+            // Create a texture from the canvas
             const texture = new THREE.CanvasTexture(canvas);
-            texture.needsUpdate = true; // Important!
+            texture.needsUpdate = true; // Mark texture for update
             return texture;
         }
 
 
+        // Initialize the Three.js scene, camera, renderer, and particles
         function initThreeJS() {
             // Get the canvas element
             const canvas = document.getElementById('bg-canvas');
             if (!canvas) {
                 console.error("Canvas element #bg-canvas not found!");
-                return;
+                return; // Exit if canvas not found
             }
 
             // Scene setup
             scene = new THREE.Scene();
 
-            // Camera setup - Covers full viewport now
+            // Camera setup (Perspective Camera)
+            // Covers the full viewport
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 50; // Adjust camera position
+            camera.position.z = 50; // Set camera distance from origin
 
-            // Renderer setup
+            // Renderer setup (WebGL)
+            // Use the existing canvas, enable transparency
             renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-             // Add checks for valid dimensions during initialization
-             const initialWidth = window.innerWidth || 1; // Use 1 as fallback
+             // Add checks for valid dimensions during initialization to prevent errors
+             const initialWidth = window.innerWidth || 1; // Use 1 as fallback if 0
              const initialHeight = window.innerHeight || 1;
-            renderer.setSize(initialWidth, initialHeight); // Full viewport size
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(initialWidth, initialHeight); // Set size to full viewport
+            renderer.setPixelRatio(window.devicePixelRatio); // Adjust for device pixel ratio
 
             // --- Create Particles ---
-            const particleCount = 5000; // Back to higher count for full screen
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
+            const particleCount = 5000; // Number of particles
+            // Arrays to store particle positions and colors
+            const positions = new Float32Array(particleCount * 3); // x, y, z for each particle
+            const colors = new Float32Array(particleCount * 3); // r, g, b for each particle
 
+            // Get theme colors from CSS variables
             const color1 = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#FF6B6B');
             const color2 = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--secondary-color').trim() || '#4ECDC4');
-            const color3 = new THREE.Color('#FFFFFF');
+            const color3 = new THREE.Color('#FFFFFF'); // White
 
-            // Calculate spread based on viewport (approximate)
-            const spreadX = initialWidth * 1.5; // Wider spread
-            const spreadY = initialHeight * 1.5; // Taller spread
+            // Calculate particle spread based on viewport size
+            const spreadX = initialWidth * 1.5; // Wider horizontal spread
+            const spreadY = initialHeight * 1.5; // Taller vertical spread
             const spreadZ = 800; // Depth spread
 
+            // Populate position and color arrays
             for (let i = 0; i < particleCount; i++) {
-                const i3 = i * 3;
+                const i3 = i * 3; // Index for current particle (x, y, z or r, g, b)
+
+                // Position: Randomly distribute particles within the spread ranges
                 positions[i3] = (Math.random() - 0.5) * spreadX;
                 positions[i3 + 1] = (Math.random() - 0.5) * spreadY;
-                positions[i3 + 2] = (Math.random() - 0.5) * spreadZ; // Keep some depth
+                positions[i3 + 2] = (Math.random() - 0.5) * spreadZ;
 
-                // Color
+                // Color: Randomly assign one of the theme colors
                 const randomColor = Math.random();
-                let chosenColor = randomColor < 0.4 ? color1 : (randomColor < 0.8 ? color2 : color3);
+                let chosenColor = randomColor < 0.4 ? color1 : (randomColor < 0.8 ? color2 : color3); // Weighted distribution
                 colors[i3] = chosenColor.r;
                 colors[i3 + 1] = chosenColor.g;
                 colors[i3 + 2] = chosenColor.b;
             }
 
-            // Geometry
+            // Geometry setup (BufferGeometry for efficiency)
             const geometry = new THREE.BufferGeometry();
+            // Set attributes for position and color
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-            // Create the circle texture
+            // Create the circular texture for particles
             const circleTexture = createCircleTexture();
 
-            // Material - Updated for circular texture
+            // Material setup (PointsMaterial for particles)
             const material = new THREE.PointsMaterial({
-                size: 1.5, // *** Smaller particle size ***
-                map: circleTexture, // Use the circle texture
-                vertexColors: true, // Tint the texture with vertex colors
-                alphaTest: 0.5, // Discard transparent pixels
+                size: 1.5, // Particle size
+                map: circleTexture, // Use the generated circle texture
+                vertexColors: true, // Use colors defined in the geometry attribute
+                alphaTest: 0.5, // Discard pixels with alpha below this threshold (makes circle edges sharp)
                 transparent: true, // Enable transparency
-                opacity: 0.8,
-                sizeAttenuation: true
+                opacity: 0.8, // Set overall particle opacity
+                sizeAttenuation: true // Make particles smaller further away
             });
 
-            // Points object
+            // Create the Points object
             particles = new THREE.Points(geometry, material);
-            scene.add(particles);
+            scene.add(particles); // Add particles to the scene
 
-            // Handle window resize
+            // Handle window resize events
             window.addEventListener('resize', onWindowResize, false);
 
-            // Start animation
-            animate();
+            // Start the animation loop *** This is called by window.onload now ***
+            // animate(); // Removed from here
         }
 
-        // Animation loop
+        // Animation loop function
         function animate() {
-            requestAnimationFrame(animate);
+            requestAnimationFrame(animate); // Request next frame
 
-            // Subtle animation
+            // Subtle animation: Rotate the particle system slowly
             if (particles) {
-                particles.rotation.y += 0.0005;
-                 particles.rotation.x += 0.0002; // Add back x rotation
+                particles.rotation.y += 0.0005; // Slow rotation around Y axis
+                 particles.rotation.x += 0.0002; // Slow rotation around X axis
             }
 
-            // Render only if renderer exists
-             if (renderer && scene && camera) { // Add checks for scene and camera
-                renderer.render(scene, camera);
+            // Render the scene if renderer, scene, and camera exist
+             if (renderer && scene && camera) {
+                 renderer.render(scene, camera);
              }
         }
 
-        // Handle window resize - Update based on window size
+        // Function to handle window resize events
         function onWindowResize() {
              // Add checks for renderer and camera existence
              if (!renderer || !camera) return;
@@ -842,28 +905,36 @@
              const width = window.innerWidth;
              const height = window.innerHeight;
 
-             // Check for zero dimensions which can cause errors
+             // Check for zero dimensions which can cause errors in Three.js
              if (width === 0 || height === 0) return;
 
+             // Update camera aspect ratio
              camera.aspect = width / height;
-             camera.updateProjectionMatrix();
+             camera.updateProjectionMatrix(); // Apply changes
+
+             // Update renderer size
              renderer.setSize(width, height);
         }
 
-        // Debounce resize handler to avoid excessive calls
+        // Debounce the resize handler to avoid performance issues
+        // This prevents the onWindowResize function from firing too rapidly during resize
         let resizeTimeout;
         window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(onWindowResize, 100); // Adjust delay as needed
+            clearTimeout(resizeTimeout); // Clear previous timeout
+            // Set a new timeout to run the resize function after a short delay
+            resizeTimeout = setTimeout(onWindowResize, 100); // 100ms delay
         });
 
 
-        // Initialize Three.js after the DOM is fully loaded
-        if (document.readyState === 'loading') { // Loading hasn't finished yet
-            document.addEventListener('DOMContentLoaded', initThreeJS);
-        } else { // `DOMContentLoaded` has already fired
-            initThreeJS();
-        }
+        // Initialize Three.js and start animation AFTER the window is fully loaded
+        window.onload = function() {
+             initThreeJS(); // Initialize the scene, camera, objects etc.
+             if (typeof animate === 'function') { // Check if animate exists
+                animate(); // Start the animation loop
+             } else {
+                console.error("Animate function not defined or accessible at window.onload");
+             }
+        };
 
 
     </script>
